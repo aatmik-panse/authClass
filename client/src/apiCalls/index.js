@@ -6,5 +6,6 @@ import axios from "axios";
 export const axiosInstance = axios.create({
   headers: {
     "Content-Type": "application/json", // this is the type of data you're sending
+    authorization: `Bearer ${localStorage.getItem("token")}`, // this is the token you're sending
   },
 });

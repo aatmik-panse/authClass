@@ -56,7 +56,9 @@ router.post("/login", async (req, res) => {
   }
   const validPass = await bcrypt.compare(req.body.password, user.password);
   if (!validPass) {
-    return res.status(400).send("Invalid password");
+    return res
+      .status(400)
+      .send({ success: false, message: "Invalid password" });
   }
   const token = jwt.sign(
     {
@@ -69,6 +71,20 @@ router.post("/login", async (req, res) => {
     }
   );
   res.send({ success: true, user, token });
+});
+
+router.get("/get-curr-user", async (req, res) => {
+  try {
+    // const token = req.headers["authorization"];
+    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+    const user = await User.findById(req.body.userId).select("-password");
+
+    res.send({ success: true, user, message: "User found" });
+  } catch (err) {
+    console.log(err);
+    res.send(err);
+  }
 });
 
 module.exports = router;
