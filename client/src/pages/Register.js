@@ -1,15 +1,26 @@
 import React, { useEffect } from "react";
 import { Form, Input, Button, Radio, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
-
+import { RegisterUser } from "../apiCalls/user";
 
 function Register() {
   const onFinish = async (values) => {
     console.log(values);
-   
+    try {
+      let response = await RegisterUser(values);
+      console.log("response");
+      console.log(response);
+
+      if (response.data.success) {
+        message.success("User registered successfully!");
+      } else {
+        message.error("User already exists!");
+      }
+    } catch (error) {
+      console.log(error);
+      message.error("Something went wrong!");
+    }
   };
-
-
 
   return (
     <>
@@ -77,15 +88,14 @@ function Register() {
                 name="role"
                 className="d-block text-center"
                 initialValue={false}
-                rules={[{ required: true, message: "Please select an option!" }]}
+                rules={[
+                  { required: true, message: "Please select an option!" },
+                ]}
               >
                 <div className="d-flex justify-content-start">
-                  <Radio.Group
-                    name="radiogroup"
-                    className="flex-start"
-                  >
-                    <Radio value={'partner'}>Yes</Radio>
-                    <Radio value={'user'}>No</Radio>
+                  <Radio.Group name="radiogroup" className="flex-start">
+                    <Radio value={"partner"}>Yes</Radio>
+                    <Radio value={"user"}>No</Radio>
                   </Radio.Group>
                 </div>
               </Form.Item>
