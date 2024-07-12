@@ -2,6 +2,7 @@ const express = require("express");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const router = express.Router();
+const jwt = require("jsonwebtoken");
 
 router.get("/", async (req, res) => {
   try {
@@ -57,7 +58,22 @@ router.post("/login", async (req, res) => {
   if (!validPass) {
     return res.status(400).send("Invalid password");
   }
-  res.send("Logged in");
+  const token = jwt.sign(
+    {
+      id: user._id,
+      email: user.email,
+    },
+    process.env.JWT_SECRET,
+    {
+      expiresIn: "10d",
+    }
+  );
+  res.send({ success: true, user, token });
 });
 
 module.exports = router;
+
+/// jwt is used to create a token for the user to login and logout
+// jwt.sign() is used to create a token
+// jwt.verify() is used to verify the token
+//

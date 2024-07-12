@@ -9,13 +9,14 @@ export const RegisterUser = async (user) => {
   }
 };
 
-// export const LoginUser = async (user) => {
-//   try {
-//     return {};
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+export const LoginUser = async (user) => {
+  try {
+    const response = await axiosInstance.post("/api/users/login", user);
+    return response;
+  } catch (error) {
+    console.log(error);
+  }
+};
 
 // proxy in client/package.json is set to http://localhost:8081
 // so the request will be made to http://localhost:8081/api/users/register

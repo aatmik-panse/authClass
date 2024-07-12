@@ -1,13 +1,25 @@
 import React, { useEffect } from "react";
 import { Button, Form, Input } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 import { message } from "antd";
-
+import { LoginUser } from "../apiCalls/user";
 function Login() {
+  let navigate = useNavigate();
+
   const onFinish = async (values) => {
     console.log(values);
     try {
+      let response = await LoginUser(values);
+
+      console.log(response);
+      if (response.data.success) {
+        message.success("User logged in successfully!");
+      } else {
+        message.error("Invalid credentials!");
+      }
+      navigate("/");
+      return response;
     } catch (error) {
       console.log(error);
     }
