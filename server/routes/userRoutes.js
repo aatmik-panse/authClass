@@ -3,6 +3,7 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const router = express.Router();
 const jwt = require("jsonwebtoken");
+const authMiddleware = require("../middleware/authMiddleware");
 
 router.get("/", async (req, res) => {
   try {
@@ -73,17 +74,19 @@ router.post("/login", async (req, res) => {
   res.send({ success: true, user, token });
 });
 
-router.get("/get-curr-user", async (req, res) => {
+router.get("/get-current-user", authMiddleware, async (req, res) => {
   try {
-    // const token = req.headers["authorization"];
-    // const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
     const user = await User.findById(req.body.userId).select("-password");
-
-    res.send({ success: true, user, message: "User found" });
-  } catch (err) {
-    console.log(err);
-    res.send(err);
+    res.send({
+      success: true,
+      message: "You are Authorized",
+      data: user,
+    });
+  } catch (error) {
+    res.send({
+      success: false,
+      message: "not authorized",
+    });
   }
 });
 

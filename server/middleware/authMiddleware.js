@@ -1,15 +1,15 @@
 const jwt = require("jsonwebtoken");
 
-const auth = (req, res, next) => {
+module.exports = function (req, res, next) {
   try {
-    const token = req.header.authotization.split(" ")[1];
+    const token = req.headers.authorization.split(" ")[1];
 
-    const varefied = jwt.verify(token, process.env.JWT_SECRET);
-    req.body.userId = varefied.id;
+    const verified = jwt.verify(token, process.env.JWT_SECRET);
+
+    req.body.userId = verified.userId;
+
     next();
-  } catch (err) {
-    return res.status(401).send("Unauthorized");
+  } catch (error) {
+    console.log(error);
   }
 };
-
-module.exports = auth;
