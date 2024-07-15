@@ -1,22 +1,42 @@
-import { axiosInstance } from ".";
+const {axiosInstance} = require('./index')
 
-export const RegisterUser = async (user) => {
-  try {
-    const response = await axiosInstance.post("/api/users/register", user);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
+//Register new User
 
-export const LoginUser = async (user) => {
-  try {
-    const response = await axiosInstance.post("/api/users/login", user);
-    return response;
-  } catch (error) {
-    console.log(error);
-  }
-};
+export const RegisterUser = async (value) => {
+    try{
+        const response = await axiosInstance.post("api/users/register", value);
+        return response.data;
+    }catch(error){
+        console.log(error);
+    }
+}
+
+
+// login user
+
+export const LoginUser = async (value) =>{
+    try {
+        const response = await axiosInstance.post("api/users/login", value);
+        return response.data
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+// get current user from the frontend
+export const GetCurrentUser = async () =>{
+    try {
+        const response = await axiosInstance.get('api/users/get-current-user')
+        return response.data
+    } catch (error) {
+       console.log(error)
+    }
+}
+
+
+
+
+
 
 // proxy in client/package.json is set to http://localhost:8081
 // so the request will be made to http://localhost:8081/api/users/register

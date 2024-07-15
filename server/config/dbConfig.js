@@ -1,12 +1,12 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 
-mongoose.connect(process.env.DATABASE_URL)
+mongoose.connect(process.env.DATABASE_URL);
 
-const connection = mongoose.connection
+const connection = mongoose.connection;
 
-connection.on('connected' , ()=>{
-    console.log('Connection Successful')
-})
-connection.on('error' , ()=>{
-    console.log('Connection unsuccessful')
-})
+connection.on("connected", () => {
+  console.log("Connection Successful");
+});
+connection.on("error", () => {
+  console.log("Connection unsuccessful");
+});

@@ -1,11 +1,20 @@
-import axios from "axios";
-// axios is a promise-based HTTP client for the browser and node.js
-// axios is used to make API calls to the server
+// import axios from "axios";
+// // axios is a promise-based HTTP client for the browser and node.js
+// // axios is used to make API calls to the server
 
-// axiosInstance is an instance of axios that has the base URL set to the server's URL
+// // axiosInstance is an instance of axios that has the base URL set to the server's URL
+// export const axiosInstance = axios.create({
+//   headers: {
+//     "Content-Type": "application/json", // this is the type of data you're sending
+//     authorization: `Bearer ${localStorage.getItem("token")}`, // this is the token you're sending
+//   },
+// });
+
+import axios from "axios";
+
 export const axiosInstance = axios.create({
   headers: {
-    "Content-Type": "application/json", // this is the type of data you're sending
-    authorization: `Bearer ${localStorage.getItem("token")}`, // this is the token you're sending
+    "Content-Type": "application/json",
+    'authorization': `Bearer ${localStorage.getItem("token")}`,
   },
 });
